@@ -74,7 +74,7 @@ const Home = () => {
     const [sort, setSort] = useState('stars');
     const [query, setQuery] = useState('');
     const [data, setData] = useState();
-    const [showData, setShowdata] = useState(false);
+    const [showData, setShowData] = useState(false);
     const [loading, setLoading] = useState(false);
     const [runEffect, setRunEffect] = React.useState(false);
     const [pagination, setPagination] = useState({
@@ -83,12 +83,16 @@ const Home = () => {
         total: 1000,
     });
     let navigate = useNavigate();
-
     const handleChange = (event) => {
         setQuery(event.target.value);
     }
 
     const handleSubmit = () => {
+        setPagination({
+            current: 1,
+            pageSize: 10,
+            total: 1000,
+        });
         fetchData(pagination);
     }
 
@@ -101,7 +105,7 @@ const Home = () => {
                 setRunEffect(false);
                 setData(result);
                 setLoading(false);
-                setShowdata(true);
+                setShowData(true);
 
             });
     };
@@ -111,12 +115,28 @@ const Home = () => {
         setRunEffect(true);
     };
 
+    console.log(pagination);
 
     useEffect(() => {
         if (runEffect) {
             fetchData(pagination)
         }
     }, [pagination, fetchData])
+
+    useEffect(() => {
+        setData(JSON.parse(window.localStorage.getItem('data')));
+        setPagination(JSON.parse(window.localStorage.getItem('pagination')));
+        setShowData(JSON.parse(window.localStorage.getItem('showData')));
+        setQuery(window.localStorage.getItem('query'));
+
+    }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('data', JSON.stringify(data));
+        if (pagination !== null) { window.localStorage.setItem('pagination', JSON.stringify(pagination)) };
+        window.localStorage.setItem('showData', (showData));
+        window.localStorage.setItem('query', (query));
+    }, [data, pagination, showData, query]);
 
     return (
 
@@ -156,7 +176,7 @@ const Home = () => {
                     <Table
                         onRow={(record, rowIndex) => {
                             return {
-                                onClick: event => {
+                                onClick: () => {
                                     navigate(`/detail/${record.id}`, { state: record })
                                 }
                             };
@@ -184,8 +204,9 @@ const Home = () => {
 
 
     );
-}
 
+
+}
 
 
 export default Home;
