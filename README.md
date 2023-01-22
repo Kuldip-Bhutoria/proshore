@@ -35,3 +35,17 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
+
+### Project Screenshots
+This is the basic homepage of the application, you can search using query for repository.
+![](2023-01-22-23-38-46.png)
+
+
+This is the search result compeletely paginated, multiple sorting is present.
+![](2023-01-22-23-41-35.png)
+
+This is the detail page of the model routed via react router.
+![](2023-01-22-23-42-18.png)
+
+
+Only 10 requests per minute are allowed because the unauthenticated API's are rate limited. 
