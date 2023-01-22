@@ -15,7 +15,6 @@ import { ConfigProvider, Input } from "antd";
 import { useNavigate } from 'react-router-dom';
 
 const { Search } = Input;
-
 const { Title } = Typography;
 
 const columns = [
@@ -93,7 +92,7 @@ const Home = () => {
             pageSize: 10,
             total: 1000,
         });
-        fetchData(pagination);
+        fetchData(window.localStorage.getItem('pagination'));
     }
 
     const fetchData = (pagination) => {
@@ -115,13 +114,12 @@ const Home = () => {
         setRunEffect(true);
     };
 
-    console.log(pagination);
 
     useEffect(() => {
         if (runEffect) {
             fetchData(pagination)
         }
-    }, [pagination, fetchData])
+    }, [pagination])
 
     useEffect(() => {
         setData(JSON.parse(window.localStorage.getItem('data')));
